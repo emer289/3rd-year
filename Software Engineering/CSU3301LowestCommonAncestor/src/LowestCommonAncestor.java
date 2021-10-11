@@ -80,7 +80,7 @@ public class LowestCommonAncestor
     }
 
     // Driver code
-    public static void main(String[] args)
+ /*   public static void main(String[] args)
     {
         LowestCommonAncestor tree = new LowestCommonAncestor();
         tree.root = new Node(1);
@@ -96,7 +96,7 @@ public class LowestCommonAncestor
         System.out.println("LCA(3, 4): " + tree.findLCA(3,4));
         System.out.println("LCA(2, 4): " + tree.findLCA(2,4));
 
-    }
+    }*/
 }
 // This code is contributed by Sreenivasulu Rayanki.
 
