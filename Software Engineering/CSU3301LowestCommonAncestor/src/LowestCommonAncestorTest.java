@@ -68,4 +68,24 @@ public class LowestCommonAncestorTest {
         assertEquals( 1, tree.findLCA(3,2));
         
     }
+    @Test
+    // checking lowestCommonAncestor with 2 parent nodes
+    // It's difficult to write the test because my code creates binary graphs
+    // and it finds the parent node for two nodes in a binary tree
+    public void testLowestCommonAncestor2ParentNodes() {
+        
+        //Set up
+        
+        LowestCommonAncestor tree = new LowestCommonAncestor();
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.right = new Node(4);
+        tree.root.right.left = tree.root.left.right;
+        
+        //assertEquals to get actual value
+        assertEquals( 3, tree.findLCA(4,2));
+        
+    }
+
 }
