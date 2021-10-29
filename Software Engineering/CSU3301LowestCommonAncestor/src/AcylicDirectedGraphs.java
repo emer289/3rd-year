@@ -6,63 +6,61 @@ import java.io.*;
 class AcylicDirectedGraphs
 {
 	// Total number of vertices
-	int vertices;
+	static int vertices;
 	
 	// Find transpose of graph represented by adj
-	ArrayList<Integer>[] adj;
+	static ArrayList<Integer>[] adj;
 	
 	// Store the transpose of graph represented by tr
-	ArrayList<Integer>[] tr;
+	static ArrayList<Integer>[] tr;
 	
-	AcylicDirectedGraphs(int vertices){
-		this.vertices = vertices;
-		adj = new ArrayList[vertices];
-		tr = new ArrayList[vertices];
-
-	}
 
 	// Function to add an edge from source vertex u to
 	// destination vertex v, if choice is false the edge is added
 	// to adj otherwise the edge is added to tr
-	public static void addedge(AcylicDirectedGraphs graph, int u, int v, boolean choice)
+	public static void addedge( int u, int v, boolean choice)
 	{
 		if(!choice)
-			graph.adj[u].add(v);
+			adj[u].add(v);
 		else
-			graph.tr[u].add(v);
+			tr[u].add(v);
 	}
 
 
-	public static ArrayList<Integer> getParentNodes(AcylicDirectedGraphs graph, int node){
+	public static ArrayList<Integer> getParentNodes( int node){
 		// Finding transpose of the graph
 		// Traverse the graph and for each edge u, v
 		// in graph add the edge v, u in transpose
-		for(int i = 0; i < graph.vertices; i++)
-			for(int j = 0; j < graph.adj[i].size(); j++)
-				addedge(graph, graph.adj[i].get(j), i, true);
+		for(int i = 0; i < vertices; i++)
+			for(int j = 0; j < adj[i].size(); j++)
+				addedge( adj[i].get(j), i, true);
 
-		return graph.tr[node];
+		return tr[node];
 
 	}
 
 	public static void main (String[] args) throws java.lang.Exception
 	{
-		AcylicDirectedGraphs graph = new AcylicDirectedGraphs(5);
-		for(int i = 0; i < graph.vertices; i++)
+		
+		vertices = 5;
+		adj = new ArrayList[vertices];
+		tr = new ArrayList[vertices];
+		for(int i = 0; i < vertices; i++)
 		{
-			graph.adj[i] = new ArrayList<Integer>();
-			graph.tr[i] = new ArrayList<Integer>();
+			adj[i] = new ArrayList<Integer>();
+			tr[i] = new ArrayList<Integer>();
 		}
-		addedge(graph, 0, 1, false);
-		addedge(graph, 0, 2, false);
-		addedge(graph, 0, 3, false);
-       	addedge(graph, 0, 4, false);
-        addedge(graph, 1, 3, false);
-        addedge(graph, 2, 4, false);
-		addedge(graph, 3, 4, false);
+		
+		addedge( 0, 1, false);
+		addedge( 0, 2, false);
+		addedge( 0, 3, false);
+       	addedge( 0, 4, false);
+        addedge( 1, 3, false);
+        addedge( 2, 4, false);
+		addedge( 3, 4, false);
 		
 		
-		System.out.print(getParentNodes(graph,3));
+		System.out.print(getParentNodes(3));
 		
 		
        
