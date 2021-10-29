@@ -49,6 +49,13 @@ class Graph
 				addedge(adj[i].get(j), i, true);
 	}
 
+	public static ArrayList<Integer> getParentNodes(int node){
+		// Finding transpose of the graph
+		getTranspose();
+		return tr[node];
+
+	}
+
 	public static void main (String[] args) throws java.lang.Exception
 	{
 		for(int i = 0; i < vertices; i++)
@@ -64,16 +71,11 @@ class Graph
         addedge(2, 4, false);
 		addedge(3, 4, false);
 		
-		// Finding transpose of the graph
-		getTranspose();
 		
-		// Printing the graph representation
-		//printGraph();
-        System.out.print("parent Nodes are " );
-        System.out.print(3 + "--> ");
-			for(int j = 0; j < tr[3].size(); j++)
-				System.out.print(tr[3].get(j) + " ");
-			System.out.println();
+		System.out.print(getParentNodes(3));
+		
+		
+       
 	}
 }
 
