@@ -3,76 +3,66 @@ import java.util.*;
 import java.lang.*;
 import java.io.*;
 
-class Graph
+class AcylicDirectedGraphs
 {
 	// Total number of vertices
-	private static int vertices = 5;
+	int vertices;
 	
 	// Find transpose of graph represented by adj
-	private static ArrayList<Integer>[] adj = new ArrayList[vertices];
+	ArrayList<Integer>[] adj;
 	
 	// Store the transpose of graph represented by tr
-	private static ArrayList<Integer>[] tr = new ArrayList[vertices];
+	ArrayList<Integer>[] tr;
+	
+	AcylicDirectedGraphs(int vertices){
+		this.vertices = vertices;
+		adj = new ArrayList[vertices];
+		tr = new ArrayList[vertices];
+
+	}
 
 	// Function to add an edge from source vertex u to
 	// destination vertex v, if choice is false the edge is added
 	// to adj otherwise the edge is added to tr
-	public static void addedge(int u, int v, boolean choice)
+	public static void addedge(AcylicDirectedGraphs graph, int u, int v, boolean choice)
 	{
 		if(!choice)
-			adj[u].add(v);
+			graph.adj[u].add(v);
 		else
-			tr[u].add(v);
+			graph.tr[u].add(v);
 	}
 
-	// Function to print the graph representation
-	public static void printGraph()
-	{
-		for(int i = 0; i < vertices; i++)
-		{
-			System.out.print(i + "--> ");
-			for(int j = 0; j < tr[i].size(); j++)
-				System.out.print(tr[i].get(j) + " ");
-			System.out.println();
-		}
-	}
 
-	// Function to print the transpose of
-	// the graph represented as adj and store it in tr
-	public static void getTranspose()
-	{
-
+	public static ArrayList<Integer> getParentNodes(AcylicDirectedGraphs graph, int node){
+		// Finding transpose of the graph
 		// Traverse the graph and for each edge u, v
 		// in graph add the edge v, u in transpose
-		for(int i = 0; i < vertices; i++)
-			for(int j = 0; j < adj[i].size(); j++)
-				addedge(adj[i].get(j), i, true);
-	}
+		for(int i = 0; i < graph.vertices; i++)
+			for(int j = 0; j < graph.adj[i].size(); j++)
+				addedge(graph, graph.adj[i].get(j), i, true);
 
-	public static ArrayList<Integer> getParentNodes(int node){
-		// Finding transpose of the graph
-		getTranspose();
-		return tr[node];
+		return graph.tr[node];
 
 	}
 
 	public static void main (String[] args) throws java.lang.Exception
 	{
-		for(int i = 0; i < vertices; i++)
+		AcylicDirectedGraphs graph = new AcylicDirectedGraphs(5);
+		for(int i = 0; i < graph.vertices; i++)
 		{
-			adj[i] = new ArrayList<Integer>();
-			tr[i] = new ArrayList<Integer>();
+			graph.adj[i] = new ArrayList<Integer>();
+			graph.tr[i] = new ArrayList<Integer>();
 		}
-		addedge(0, 1, false);
-		addedge(0, 2, false);
-		addedge(0, 3, false);
-        addedge(0, 4, false);
-        addedge(1, 3, false);
-        addedge(2, 4, false);
-		addedge(3, 4, false);
+		addedge(graph, 0, 1, false);
+		addedge(graph, 0, 2, false);
+		addedge(graph, 0, 3, false);
+       	addedge(graph, 0, 4, false);
+        addedge(graph, 1, 3, false);
+        addedge(graph, 2, 4, false);
+		addedge(graph, 3, 4, false);
 		
 		
-		System.out.print(getParentNodes(3));
+		System.out.print(getParentNodes(graph,3));
 		
 		
        
