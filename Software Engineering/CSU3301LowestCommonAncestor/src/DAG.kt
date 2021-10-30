@@ -40,22 +40,20 @@ fun bfs(u: Int) {
 }
 
 fun main(args: Array<String>) {
-    var tmp = sc.readLine()
-    var tmp1 = arrayOf("9 7", "0 1", "1 2")
-    println("1 tmp is " + tmp)
-    val (v, e) = tmp.split(" ").map { it.toInt() }
+   // var tmp = sc.readLine()
+    var tmp1 = arrayOf("9 7", "0 1", "1 2", "1 3", "2 3", "3 4", "6 7", "6 8")
+    val (v, e) = tmp1[0].split(" ").map { it.toInt() }
 
     (0..v-1).forEach { nodes.add(Node(Color.WHITE)) }
     (0..v-1).forEach { adj.add(mutableListOf()) }
 
     (0..v-1).forEach { nodes[it] = Node(Color.WHITE) }
     (0..e-1).forEach {
-        tmp = sc.readLine()
-        println("3 is " + tmp1.iterator().next() )
-        println("2 tmp is " + tmp)
-        val (tv, tw) = tmp.split(" ").map { it.toInt() }
-        adj[tv].add(Pair(tw, 1))
-        adj[tw].add(Pair(tv, 1))
+       // tmp = sc.readLine()
+        tmp1.filter { b -> b[0].equals(tmp1[0]) }.map { val (tv, tw) = it.split(" ").map { a-> a.toInt() }
+            adj[tv].add(Pair(tw, 1))
+            adj[tw].add(Pair(tv, 1)) }
+
     }
 
     bfs(0)
