@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // A Binary Tree node
-class Node {
+/*class Node {
     int data;
     Node left, right;
 
@@ -12,9 +12,9 @@ class Node {
         data = value;
         left = right = null;
     }
-}
+}*/
 
-public class LowestCommonAncestor
+/*public class LowestCommonAncestor
 {
 
     Node root;
@@ -97,6 +97,6 @@ public class LowestCommonAncestor
         System.out.println("LCA(2, 4): " + tree.findLCA(2,4));
 
     }*/
-}
+//}
 // This code is contributed by Sreenivasulu Rayanki.
 
