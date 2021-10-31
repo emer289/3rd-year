@@ -1,104 +1,83 @@
-package `Directed Acyclic Graph`
 
 import org.junit.Assert.*
 import org.junit.Test
-import lca
-import Graph
 import Node
+import DAG
+
+
+val dag: DAG = DAG(1)
+val r: Node = dag.root
+
+val n2 = Node(2)
+val n3 = Node(3)
+val n4 = Node(4)
+val n5 = Node(5)
+val n6 = Node(6)
+val n7 = Node(7)
 
 class LCATest {
 
-
     @Test
-
+    //this is the first java test(from part1 of the assignment) to kotlin
     fun `checking LCA is giving the expected result for a tree with 7 nodes`() {
-        var node0 = (Node(Color.WHITE, 0, 0, 2, listOf()))
-        var node1 = (Node(Color.WHITE, 1, 1, 2, listOf(node0)))
-        var node2 = (Node(Color.WHITE, 2, 1, 2, listOf(node0)))
-        var node3 = (Node(Color.WHITE, 3, 1, 2, listOf(node1)))
-        var node4 = (Node(Color.WHITE, 4, 1, 2, listOf(node1)))
-        var node5 = (Node(Color.WHITE, 5, 1, 2, listOf(node2)))
-        var node6 = (Node(Color.WHITE, 6, 1, 2, listOf(node2)))
 
-        val graph = Graph(
-            listOf(
-                listOf(node0),
-                listOf(node1),
-                listOf(node2),
-                listOf(node4),
-                listOf(node3),
-                listOf(node5),
-                listOf(node6)
-            )
-        )
+        r.descendants = listOf<Node>(n2,n3)
+        n2.ancestors = listOf<Node>(r)
+        n2.descendants = listOf<Node>(n4, n5)
+        n3.ancestors = listOf<Node>(r)
+        n3.descendants = listOf<Node>(n6, n7)
+        n4.ancestors = listOf<Node>(n2)
+        n5.ancestors = listOf<Node>(n2)
+        n6.ancestors = listOf<Node>(n3)
+        n7.ancestors = listOf<Node>(n3)
 
-        assertEquals("[1]", lca(graph, node4, node3).map { it.value }.toString())
-        assertEquals("[2]", lca(graph, node5, node6).map { it.value }.toString())
-        assertEquals("[0]", lca(graph, node1, node2).map { it.value }.toString())
-        assertEquals("[0,1]", lca(graph, node1, node4).map { it.value }.toString())
+
+        assertEquals("[2]", dag.lca(n4,n5).map { it.value }.toString())
+        assertEquals("[1]", dag.lca(n4,n6).map { it.value }.toString())
+        assertEquals("[1]", dag.lca(n3,n4).map { it.value }.toString())
+        assertEquals("[2]", dag.lca(n2,n4).map { it.value }.toString())
 
     }
 
     @Test
-
-    fun ` checking LCA is returns -1 for a tree with 0 nodes`() {
-
-        val graph = Graph(
-            listOf(
-            )
-        )
-        var node5 = (Node(Color.WHITE, 5, 1, 2, listOf()))
-        var node6 = (Node(Color.WHITE, 6, 1, 2, listOf()))
-
-        assertEquals("[-1]", lca(graph, node5, node6).map { it.value }.toString())
-
-
+    //this is the second java test(from part1 of the assignment) to kotlin
+    fun ` checking LCA returns -1 for a tree with 0 nodes`() {
+        assertEquals( "-1",dag.lca().toString())
     }
 
     @Test
+    //this is the third java test(from part1 of the assignment) to kotlin
     fun `checking LCA is returns 1 for a tree with 2 nodes`() {
-
-        var node1 = (Node(Color.WHITE, 1, 1, 2, listOf()))
-        var node2 = (Node(Color.WHITE, 2, 1, 2, listOf(node1)))
-        val graph = Graph(
-            listOf(
-                listOf(node1), listOf(node2)
-            )
-        )
-
-
-        assertEquals("[1]", lca(graph, node1, node2).map { it.value }.toString())
-
-
+        r.descendants = listOf<Node>(n2)
+        n2.ancestors = listOf<Node>(r)
+        assertEquals("[1]", dag.lca(r,n2).map { it.value }.toString())
     }
 
-
+    //this is the forth java test, this failed with the old LCA code but now passes
     @Test
+    //for this test i will use the graph shown in the lecture
+    //a=n1,b=n2,c=n3,d=n4,e=n5
     fun `checking LCA with 2 parent nodes`() {
-
-        var node0 = (Node(Color.WHITE, 0, 0, 3, listOf()))
-        var node1 = (Node(Color.WHITE, 1, 1, 1, listOf(node0)))
-        var node2 = (Node(Color.WHITE, 2, 1, 1, listOf(node0, node1)))
-        var node3 = (Node(Color.WHITE, 3, 1, 1, listOf(node0)))
-        var node4 = (Node(Color.WHITE, 4, 3, 1, listOf(node0, node1, node2, node3)))
-        var node5 = (Node(Color.WHITE, 5, 2, 0, listOf(node3,node4)))
-
-
-        val graph = Graph(
-            listOf(
-                listOf(node0),
-                listOf(node1),
-                listOf(node2),
-                listOf(node4),
-                listOf(node3),
-                listOf(node5)
-            )
-        )
+        r.descendants = listOf<Node>(n2,n3,n4,n5)
+        n2.ancestors = listOf<Node>(r)
+        n2.descendants = listOf<Node>(n4)
+        n3.ancestors = listOf<Node>(r)
+        n3.descendants = listOf<Node>(n4, n5)
+        n4.ancestors = listOf<Node>(r,n2,n3)
+        n4.descendants = listOf(n5)
+        n5.ancestors = listOf<Node>(r,n3,n4)
 
 
-        assertEquals("[0 1]", lca(graph, node5, node4).map { it.value }.toString())
-
+        assertEquals("[1]", dag.lca(n2,n3).map { it.value }.toString())
+        // returns two LCA
+        assertEquals("[1, 3]", dag.lca(n4,n5).map { it.value }.toString())
+        assertEquals("[1]", dag.lca(n3,n4).map { it.value }.toString())
+        assertEquals("[1]", dag.lca(r,n4).map { it.value }.toString())
 
     }
 
 }
+
+
+
+
