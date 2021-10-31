@@ -57,7 +57,7 @@ class LCATest {
     @Test
     //for this test i will use the graph shown in the lecture
     //a=n1,b=n2,c=n3,d=n4,e=n5
-    fun `checking LCA with 2 parent nodes`() {
+    fun `checking LCA with 2 LCA nodes`() {
         r.descendants = listOf<Node>(n2,n3,n4,n5)
         n2.ancestors = listOf<Node>(r)
         n2.descendants = listOf<Node>(n4)
@@ -71,6 +71,29 @@ class LCATest {
         assertEquals("[1]", dag.lca(n2,n3).map { it.value }.toString())
         // returns two LCA
         assertEquals("[1, 3]", dag.lca(n4,n5).map { it.value }.toString())
+        assertEquals("[1]", dag.lca(n3,n4).map { it.value }.toString())
+        assertEquals("[1]", dag.lca(r,n4).map { it.value }.toString())
+
+    }
+    @Test
+
+    fun `checking LCA with 3 LCA nodes`() {
+        r.descendants = listOf<Node>(n2,n3,n4,n5)
+        n2.ancestors = listOf<Node>(r)
+        n2.descendants = listOf<Node>(n4,n6,n7)
+        n3.ancestors = listOf<Node>(r)
+        n3.descendants = listOf<Node>(n4, n5)
+        n4.ancestors = listOf<Node>(r,n2,n3)
+        n4.descendants = listOf(n5,n6,n7)
+        n5.ancestors = listOf<Node>(r,n3,n4)
+        n5.descendants = listOf(n6,n7)
+        n6.ancestors = listOf(n2,n4,n5)
+        n7.ancestors = listOf(n2,n4,n5)
+
+
+        assertEquals("[1]", dag.lca(n2,n3).map { it.value }.toString())
+        // returns 3 LCA
+        assertEquals("[2, 4, 5]", dag.lca(n6,n7).map { it.value }.toString())
         assertEquals("[1]", dag.lca(n3,n4).map { it.value }.toString())
         assertEquals("[1]", dag.lca(r,n4).map { it.value }.toString())
 
